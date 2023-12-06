@@ -2,8 +2,8 @@ import Menu from "@/components/Menu/Menu";
 import styles from "./singlePage.module.css";
 import Image from "next/image";
 import Comments from "@/components/comments/Comments";
-// TODO: add table of content with <details> elements and summary elements
-/* const getData = async (slug) => {
+
+const getData = async (slug) => {
   const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
     cache: "no-store",
   });
@@ -13,17 +13,17 @@ import Comments from "@/components/comments/Comments";
   }
 
   return res.json();
-}; */
+};
 
-const SinglePage = /* async */ (/* { params } */) => {
-    /*  const { slug } = params;
-   
-     const data = await getData(slug); */
+const SinglePage = async ({ params }) => {
+  const { slug } = params;
 
-    return (
-        <article className={styles.container}>
-            <div className={styles.infoContainer}>
-                {/*  <div className={styles.textContainer}>
+  const data = await getData(slug);
+
+  return (
+    <article className={styles.container}>
+      <div className={styles.infoContainer}>
+        <hgroup className={styles.textContainer}>
           <h1 className={styles.title}>{data?.title}</h1>
           <div className={styles.user}>
             {data?.user?.image && (
@@ -33,10 +33,10 @@ const SinglePage = /* async */ (/* { params } */) => {
             )}
             <div className={styles.userTextContainer}>
               <span className={styles.username}>{data?.user.name}</span>
-              <span className={styles.date}>01.01.2024</span>
+              <span className={styles.date}>{data?.createdAt.substring(0, 10)}</span>
             </div>
           </div>
-        </div>
+        </hgroup>
         {data?.img && (
           <div className={styles.imageContainer}>
             <Image src={data.img} alt="" fill className={styles.image} />
@@ -49,15 +49,14 @@ const SinglePage = /* async */ (/* { params } */) => {
             className={styles.description}
             dangerouslySetInnerHTML={{ __html: data?.desc }}
           />
-          */}
-                <div className={styles.comment}>
-                    <Comments /* postSlug={slug} */ />
-                </div>
-                {/* </div>
-        <Menu />  */}
-            </div>
-        </article>
-    );
+          <div className={styles.comment}>
+            <Comments postSlug={slug} />
+          </div>
+        </div>
+        <Menu />
+      </div>
+    </article>
+  );
 };
 
 export default SinglePage;
